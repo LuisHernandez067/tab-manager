@@ -1,0 +1,53 @@
+{
+  "name": "tab-manager",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build:popup": "ng build popup",
+    "build:side-panel": "ng build side-panel",
+    "build:dashboard": "ng build dashboard",
+    "build:options": "ng build options",
+    "build:worker": "node build-worker.mjs",
+    "build:post": "node scripts/post-build.mjs",
+    "icons:generate": "node scripts/generate-icons.mjs",
+    "build": "npm run build:popup && npm run build:side-panel && npm run build:dashboard && npm run build:options && npm run build:worker && npm run build:post",
+    "build:watch": "concurrently \"ng build popup --watch\" \"ng build side-panel --watch\" \"node build-worker.mjs\"",
+    "build:all": "ng build popup && ng build side-panel && ng build dashboard && ng build options && npm run build:worker && npm run build:post",
+    "test": "ng test",
+    "lint": "ng lint"
+  },
+  "dependencies": {
+    "@angular/animations": "^19.0.0",
+    "@angular/common": "^19.0.0",
+    "@angular/compiler": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/forms": "^19.0.0",
+    "@angular/platform-browser": "^19.0.0",
+    "@angular/platform-browser-dynamic": "^19.0.0",
+    "@angular/router": "^19.0.0",
+    "bootstrap": "^5.3.0",
+    "bootstrap-icons": "^1.13.1",
+    "dexie": "^4.0.0",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.7.0",
+    "zone.js": "^0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.0.0",
+    "@angular/cli": "^19.0.0",
+    "@angular/compiler-cli": "^19.0.0",
+    "@types/chrome": "^0.0.278",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^22.0.0",
+    "concurrently": "^9.0.0",
+    "esbuild": "^0.24.0",
+    "jasmine-core": "~5.4.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "sharp": "^0.34.5",
+    "typescript": "~5.6.0"
+  }
+}

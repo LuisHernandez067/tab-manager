@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "WebWorker"],
+    "outDir": "./dist/worker-tmp",
+    "types": ["chrome"],
+    "typeRoots": ["./node_modules/@types"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": false,
+    "paths": {
+      "@app/*": ["./src/app/*"]
+    }
+  },
+  "include": [
+    "workers/**/*.ts",
+    "src/app/data/**/*.ts",
+    "src/app/shared/**/*.ts",
+    "src/app/core/messaging/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/app/features/**/*.ts"
+  ]
+}
