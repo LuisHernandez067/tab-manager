@@ -19,10 +19,10 @@ export class MessageSenderService {
    *          On any error: `{ success: false, error: '<message>' }`.
    *
    * @example
-   * const res = await sender.send<PanicCaptureRequest, PanicCaptureResult>(
-   *   { type: 'PANIC_CAPTURE' }
+   * const res = await sender.send<CaptureRequest, CaptureResult>(
+   *   { type: 'CAPTURE', mode: 'session' }
    * );
-   * if (res.success) console.log(res.data.sessionId);
+   * if (res.success) console.log(res.data.message);
    */
   async send<TReq extends TabManagerRequest, TData = void>(
     message: TReq,

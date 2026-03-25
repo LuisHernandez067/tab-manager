@@ -1,7 +1,7 @@
 // Messaging layer — typed UI ↔ Service Worker contract
 export {
   // Request interfaces
-  PanicCaptureRequest,
+  CaptureRequest,
   GetSessionCountRequest,
   RestoreSessionRequest,
   DeleteSessionRequest,
@@ -10,8 +10,10 @@ export {
   ErrorResponse,
   TabManagerResponse,
   // Response data shapes
-  PanicCaptureResult,
+  CaptureResult,
   SessionCountResult,
+  CaptureMode,
+  CaptureScope,
   // Union type for all requests
   TabManagerRequest,
 } from './tab-manager-message.types';

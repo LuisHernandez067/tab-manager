@@ -1,12 +1,18 @@
+import type { CaptureMode, CaptureScope } from '@app/shared/models';
+
+export type { CaptureMode, CaptureScope } from '@app/shared/models';
+
 // ---------------------------------------------------------------------------
 // Request messages — UI → Service Worker
 // ---------------------------------------------------------------------------
 
-/** Trigger panic capture of the current (or specified) window */
-export interface PanicCaptureRequest {
-  readonly type: 'PANIC_CAPTURE';
-  /** Omit to capture the current window */
-  readonly windowId?: number;
+/** Trigger a capture using the persisted scope preference */
+export interface CaptureRequest {
+  readonly type: 'CAPTURE';
+  readonly mode: CaptureMode;
+  readonly tabIds?: readonly number[];
+  /** Omit to resolve from the active browser window */
+  readonly currentWindowId?: number;
 }
 
 /** Get total saved (non-deleted) session count */
@@ -45,8 +51,7 @@ export interface OpenSidePanelRequest {
 /** Capture completed successfully */
 export interface CaptureCompleteEvent {
   readonly type: 'CAPTURE_COMPLETE';
-  readonly sessionId: string;
-  readonly tabCount: number;
+  readonly result: CaptureResult;
 }
 
 /** Capture failed */
@@ -81,10 +86,14 @@ export type TabManagerResponse<T = void> = SuccessResponse<T> | ErrorResponse;
 // Specific response data types
 // ---------------------------------------------------------------------------
 
-export interface PanicCaptureResult {
-  readonly sessionId: string;
+export interface CaptureResult {
+  readonly captureMode: CaptureMode;
+  readonly scope: CaptureScope;
+  readonly sessionId?: string;
+  readonly standaloneGroupId?: string;
   readonly tabCount: number;
-  readonly sessionName: string;
+  readonly dryRunClosedCount: number;
+  readonly message: string;
 }
 
 export interface SessionCountResult {
@@ -96,7 +105,7 @@ export interface SessionCountResult {
 // ---------------------------------------------------------------------------
 
 export type TabManagerRequest =
-  | PanicCaptureRequest
+  | CaptureRequest
   | GetSessionCountRequest
   | RestoreSessionRequest
   | DeleteSessionRequest
@@ -109,7 +118,7 @@ export type TabManagerRequest =
 // ---------------------------------------------------------------------------
 
 export type TabManagerMessage =
-  | PanicCaptureRequest
+  | CaptureRequest
   | GetSessionCountRequest
   | RestoreSessionRequest
   | DeleteSessionRequest

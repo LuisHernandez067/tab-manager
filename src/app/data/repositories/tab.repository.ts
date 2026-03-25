@@ -24,6 +24,18 @@ export class TabRepository {
   }
 
   /**
+   * Reactive list of tabs for a standalone batch.
+   * Ordered by position ascending. Updates automatically on DB changes.
+   */
+  getByStandaloneGroup$(standaloneGroupId: string): Observable<SavedTab[]> {
+    return from(
+      liveQuery(() =>
+        this.db.tabs.where('standaloneGroupId').equals(standaloneGroupId).sortBy('position'),
+      ),
+    );
+  }
+
+  /**
    * Atomically insert all tabs for a session.
    * @throws {DexieError} on write failure — callers MUST guard tab removal with this.
    */

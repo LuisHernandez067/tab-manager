@@ -1,6 +1,14 @@
-import type { SavedTab } from '@app/shared/models';
+import type { CaptureMode, SavedTab } from '@app/shared/models';
 
+import { categorizeTab } from '@app/shared/utils/categorize-tab';
 import { extractDomain, normalizeUrl } from '@app/shared/utils/url.utils';
+
+export interface TabCaptureContext {
+  readonly mode: CaptureMode;
+  readonly sessionId?: string;
+  readonly standaloneGroupId?: string;
+  readonly capturedAt: Date;
+}
 
 /**
  * Maps a raw Chrome tab to a `SavedTab` domain entity.
@@ -14,7 +22,7 @@ import { extractDomain, normalizeUrl } from '@app/shared/utils/url.utils';
  */
 export function mapChromeTabToSavedTab(
   tab: chrome.tabs.Tab,
-  sessionId: string,
+  context: TabCaptureContext,
   position: number,
 ): SavedTab {
   const url = tab.url ?? '';
@@ -22,17 +30,19 @@ export function mapChromeTabToSavedTab(
 
   return {
     id: crypto.randomUUID(),
-    sessionId,
+    sessionId: context.mode === 'session' ? context.sessionId : undefined,
+    standaloneGroupId: context.mode === 'tabs' ? context.standaloneGroupId : undefined,
     url,
     title,
     favIconUrl: tab.favIconUrl,
     domain: extractDomain(url),
     normalizedUrl: normalizeUrl(url),
+    category: categorizeTab(url),
     position,
     pinned: tab.pinned,
     active: tab.active,
-    createdAt: new Date(),
+    createdAt: context.capturedAt,
     isRestored: false,
-    capturedAt: new Date(),
+    capturedAt: context.capturedAt,
   };
 }

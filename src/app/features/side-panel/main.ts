@@ -1,5 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { dbProvider } from '@app/data/dexie/db.provider';
 
@@ -7,7 +7,7 @@ import { SidePanelAppComponent } from './app.component';
 
 bootstrapApplication(SidePanelAppComponent, {
   providers: [
-    provideAnimationsAsync(),
+    provideAnimations(),
     dbProvider,
   ],
 }).catch((err: unknown) => console.error(err));

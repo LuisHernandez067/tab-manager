@@ -14,6 +14,7 @@
     "build:watch": "concurrently \"ng build popup --watch\" \"ng build side-panel --watch\" \"node build-worker.mjs\"",
     "build:all": "ng build popup && ng build side-panel && ng build dashboard && ng build options && npm run build:worker && npm run build:post",
     "test": "ng test",
+    "test:popup:headless": "CHROME_BIN=\"$(which google-chrome)\" ng test popup --watch=false --progress=false --browsers=ChromeHeadless",
     "lint": "ng lint"
   },
   "dependencies": {

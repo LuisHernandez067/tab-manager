@@ -1,16 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MessageSenderService } from '@app/core/messaging';
-
-import { PanicButtonComponent } from './components/panic-button/panic-button.component';
+import { CaptureActionsComponent } from './components/capture-actions/capture-actions.component';
 import { SessionCountBadgeComponent } from './components/session-count-badge/session-count-badge.component';
 
 @Component({
   selector: 'tm-popup-root',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, PanicButtonComponent, SessionCountBadgeComponent],
+  imports: [CommonModule, CaptureActionsComponent, SessionCountBadgeComponent],
   template: `
     <div class="popup-container d-flex flex-column" style="min-width: 320px; min-height: 200px;">
       <header class="popup-header d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
@@ -18,7 +16,7 @@ import { SessionCountBadgeComponent } from './components/session-count-badge/ses
         <tm-session-count-badge />
       </header>
       <main class="popup-main flex-grow-1 d-flex flex-column align-items-stretch px-3 py-3 gap-2">
-        <tm-panic-button />
+        <tm-capture-actions />
       </main>
       <footer class="popup-footer px-3 py-2 border-top">
         <a
@@ -32,8 +30,5 @@ import { SessionCountBadgeComponent } from './components/session-count-badge/ses
   `,
 })
 export class PopupAppComponent {
-  /** Injected so child components can use it via the component tree DI. */
-  protected readonly messageSender = inject(MessageSenderService);
-
   readonly dashboardUrl: string = chrome.runtime.getURL('dashboard/index.html');
 }

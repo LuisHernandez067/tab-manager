@@ -16,10 +16,13 @@
     "workers/**/*.ts",
     "src/app/data/**/*.ts",
     "src/app/shared/**/*.ts",
-    "src/app/core/messaging/**/*.ts"
+    "src/app/core/messaging/**/*.ts",
+    "src/app/core/settings/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "src/app/features/**/*.ts"
+    "src/app/features/**/*.ts",
+    "src/**/*.spec.ts",
+    "workers/**/*.spec.ts"
   ]
 }
